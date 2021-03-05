@@ -1,0 +1,37 @@
+# Write your query or mutation here
+# Write your query or mutation here
+fragment allUserField on User {
+  name
+  email
+  isAdmin
+  password_is_set
+}
+
+
+mutation createAdmin{
+  createUser(data:{
+  name:"admin",
+  password:"12345678",
+  email:"me2@wynwhy.com",
+  isAdmin:true
+}){
+  name
+}
+
+}
+
+query getAllUser($withLabel:Boolean!){
+  allUsers{
+    ...allUserField
+    
+    _label_ @include(if: $withLabel)
+  
+  }
+}
+
+
+
+#Var
+{
+  "withLabel": false
+}
