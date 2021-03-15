@@ -30,7 +30,10 @@ module.exports = {
     // read: access.userIsAdminOrOwner,
     // update: access.userIsAdminOrOwner,
     // create: access.userIsAdmin,
-    // delete: access.userIsAdmin,
+    // delete: access.userIsAdmin,User
     auth: true,
   },
+  plural: "用户",
+  // itemQueryName: "Person",
+  listQueryName: "Users",
 };

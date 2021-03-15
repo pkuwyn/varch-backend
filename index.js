@@ -8,15 +8,33 @@ const initialiseData = require("./initial-data");
 const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
 const PROJECT_NAME = "虚拟仿真田野考古";
 const adapterConfig = {
-  mongoUri: 'mongoUri: "mongodb://localhost:27017/varch-api?ssl=false",',
+  mongoUri: 'mongoUri: "mongodb://localhost:27017/varch-db?ssl=false",',
 };
+
+//Session store
+// var session = require("express-session");
+const MongoStore = new (require("express-sessions"))({
+  storage: "mongodb",
+  host: "localhost", // optional
+  port: 27017, // optional
+  db: "session-db", // optional
+  collection: "sessions", // optional
+  expire: 1000 * 60 * 60 * 24 * 30, // 30 days
+});
 
 //ListSchema
 const UserSchema = require("./lists/User.js");
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
-  onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
+  // onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
+  cookie: {
+    secure: process.env.NODE_ENV === "production", // Default to true in production
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+    sameSite: false,
+  },
+  cookieSecret: "developing",
+  sessionStore: MongoStore,
 });
 
 keystone.createList("User", UserSchema);
