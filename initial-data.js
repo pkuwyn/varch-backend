@@ -1,46 +1,28 @@
-const crypto = require('crypto');
-const randomString = () => crypto.randomBytes(6).hexSlice();
+const { createItems } = require("@keystonejs/server-side-graphql-client");
 
-module.exports = async keystone => {
-  // Count existing users
-  const {
-    data: {
-      _allUsersMeta: { count = 0 },
-    },
-  } = await keystone.executeGraphQL({
-    context: keystone.createContext().sudo(),
-    query: `query {
-      _allUsersMeta {
-        count
-      }
-    }`,
+module.exports = async (keystone) => {
+  // Reset the database each time for init
+  await keystone.adapter.dropDatabase();
+  await createItems({
+    keystone,
+    listKey: "User",
+    items: [
+      {
+        data: {
+          name: "admin",
+          password: "12345678",
+          email: "me@wynwhy.com",
+          isAdmin: true,
+        },
+      },
+      {
+        data: {
+          name: "normal_user",
+          password: "12345678",
+          email: "me2@wynwhy.com",
+          isAdmin: false,
+        },
+      },
+    ],
   });
-
-  if (count === 0) {
-    const password = randomString();
-    const email = 'admin@example.com';
-
-    const { errors } = await keystone.executeGraphQL({
-      context: keystone.createContext().sudo(),
-      query: `mutation initialUser($password: String, $email: String) {
-            createUser(data: {name: "Admin", email: $email, isAdmin: true, password: $password}) {
-              id
-            }
-          }`,
-      variables: { password, email },
-    });
-
-    if (errors) {
-      console.log('failed to create initial user:');
-      console.log(errors);
-    } else {
-      console.log(`
-
-      User created:
-        email: ${email}
-        password: ${password}
-      Please change these details after initial login.
-      `);
-    }
-  }
 };

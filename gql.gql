@@ -29,6 +29,13 @@ query getAllUser($withLabel:Boolean!){
   }
 }
 
+query getCurrentUser {
+  authenticatedUser {
+    ...allUserField
+  }
+}
+
+
 
 
 #Var
