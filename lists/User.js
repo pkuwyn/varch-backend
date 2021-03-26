@@ -33,7 +33,23 @@ module.exports = {
     // delete: access.userIsAdmin,User
     auth: true,
   },
-  plural: "用户",
-  // itemQueryName: "Person",
+
+  //naming config
+  label: "用户标签",
+  plural: "用户复数",
+  singular: "用户单数",
+  itemQueryName: "User",
   listQueryName: "Users",
+
+  schemaDoc: "用户",
+  labelResolver: (item) => `${item.name} - ${item.email}`,
+
+  //admin view config
+  adminConfig: {
+    defaultColumns: "email,isAdmin",
+    defaultPageSize: 50,
+    defaultSort: "email",
+    maximumPageSize: 100,
+  },
+  adminDoc: "用户列表",
 };

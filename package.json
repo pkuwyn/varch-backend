@@ -15,7 +15,7 @@
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start",
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
-    "start:watch": "nodemon server.js"
+    "start:watch": "cross-env NODE_ENV=development DISABLE_LOGGING=true nodemon server.js"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^11.0.1",
