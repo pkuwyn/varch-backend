@@ -23,13 +23,17 @@
     "@keystonejs/app-graphql": "^6.2.0",
     "@keystonejs/auth-password": "^6.0.1",
     "@keystonejs/fields": "^22.0.0",
+    "@keystonejs/fields-content": "^9.1.0",
     "@keystonejs/keystone": "^19.2.0",
+    "@keystonejs/list-plugins": "^8.1.0",
     "@keystonejs/server-side-graphql-client": "^2.1.0",
     "connect-mongo": "^4.4.1",
     "connect-mongodb-session": "^2.4.1",
     "cross-env": "^7.0.3",
     "express-session": "^1.17.1",
-    "express-sessions": "^1.0.6"
+    "express-sessions": "^1.0.6",
+    "node-color-log": "^5.2.0",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

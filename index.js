@@ -17,6 +17,11 @@ const adapterConfig = {
 };
 const PROJECT_NAME = "虚拟仿真田野考古";
 
+//plugins
+const { logAuth } = require("./plugins/logging-plugins");
+//access
+const { userIsAdmin } = require("./access-control/access-basic");
+
 //use express-sessions as session store
 // const store = new (require("express-sessions"))({
 //   storage: "mongodb",
@@ -48,7 +53,15 @@ const store = MongoStore.create({
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
+  appVersion: {
+    version: "1.0.0",
+    addVersionToHttpHeaders: false,
+    access: true,
+  },
+
+  //初始化测试数据
   // onConnect: initialiseData,
+
   cookie: {
     secure: process.env.NODE_ENV === "production", // Default to true in production
     maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
@@ -56,6 +69,9 @@ const keystone = new Keystone({
   },
   cookieSecret: "developing",
   sessionStore: store,
+  queryLimits: {
+    maxTotalResults: 1000,
+  },
 });
 
 //ListSchema
@@ -67,6 +83,7 @@ const authStrategy = keystone.createAuthStrategy({
   type: PasswordAuthStrategy,
   list: "User",
   config: { protectIdentities: process.env.NODE_ENV === "production" },
+  plugins: [logAuth],
 });
 
 module.exports = {
@@ -77,6 +94,7 @@ module.exports = {
       name: PROJECT_NAME,
       enableDefaultRoute: true,
       authStrategy,
+      isAccessAllowed: userIsAdmin,
     }),
   ],
 };

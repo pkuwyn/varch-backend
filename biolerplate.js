@@ -6,42 +6,9 @@ const {
   Select,
 } = require("@keystonejs/fields");
 
-//plugins
-const { atTracking } = require("@keystonejs/list-plugins");
-// const {loggingListConfig} = require("../plugins/logging-list-config");
-
-//Access Control
-const { UserListAccess } = require("../access-control/list-access");
-const { loggingListConfig } = require("../plugins/logging-plugins");
-
-//utils
-const { emailValidator } = require("../utils/field-validators");
-
 module.exports = {
   //模型字段
   fields: {
-    //邮箱
-    email: {
-      //功能设置
-      type: Text,
-
-      isRequired: true,
-      isUnique: true,
-
-      //权限控制
-
-      //文档配置
-      label: "邮箱",
-      adminDoc: "邮箱是登陆凭据，不可重复",
-      schemaDoc: "邮箱",
-
-      //field hooks
-      hooks: {
-        // Hooks for create and update operations
-        validateInput: emailValidator,
-      },
-    },
-
     //昵称
     name: {
       //功能设置
@@ -53,9 +20,14 @@ module.exports = {
       //权限控制
 
       //文档配置
-      label: "昵称",
-      adminDoc: "设置昵称，可重复 ",
-      schemaDoc: "昵称",
+      label: "昵称label",
+      adminDoc: "昵称 adminDoc ",
+      schemaDoc: "昵称 schemaDoc",
+    },
+    //邮箱
+    email: {
+      type: Text,
+      isUnique: true,
     },
 
     //密码
@@ -66,15 +38,36 @@ module.exports = {
     //是否为管理员
     isAdmin: {
       type: Checkbox,
+      // Field-level access controls
+      // Here, we set more restrictive field access so a non-admin cannot make themselves admin.
+      // access: {
+      //   update: access.userIsAdmin,
+      // },
     },
   },
 
   //列表级权限控制
-  access: UserListAccess,
+  // access: UserListAccess,
 
-  // access: {
-  //   auth: true,
-  // },
+  access: {
+    // read: ({
+    //   authentication,
+    //   listKey,
+    //   operation,
+    //   originalInput,
+    //   gqlName,
+    //   itemId,
+    //   itemIds,
+    // }) => {
+    //   console.log(JSON.stringify(authentication.item));
+    //   console.log(listKey, operation, originalInput, gqlName, itemId, itemIds);
+    //   return { isAdmin: false };
+    // },
+    // update: userIsAdminOrIsItem,
+    // create: userIsAdmin,
+    // delete: userIsAdmin,
+    auth: true,
+  },
 
   //模型url 标签显示 文档内容设置
   path: "users",

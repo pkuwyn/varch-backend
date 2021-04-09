@@ -27,12 +27,19 @@ module.exports = async (keystone) => {
           isAdmin: false,
         },
       },
-
       {
         data: {
           ...commonFields,
           name: "user2",
           email: "2@wynwhy.com",
+          isAdmin: false,
+        },
+      },
+
+      {
+        data: {
+          ...commonFields,
+          email: "1@wynwhy.com",
           isAdmin: false,
         },
       },

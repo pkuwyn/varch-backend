@@ -1,5 +1,4 @@
 # Write your query or mutation here
-# Write your query or mutation here
 fragment allUserField on User {
   name
   email
@@ -34,7 +33,17 @@ query getCurrentUser {
     ...allUserField
   }
 }
+query getSpecificUser {
+  User(where:{id:"606e8f6f53a9083afc6f54eb"}){
+    ...allUserField
+  }
+}
 
+query getSpecificUsers {
+  allUsers(where:{isAdmin:false}){
+    ...allUserField
+  }
+}
 
 
 
