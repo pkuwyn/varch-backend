@@ -1,3 +1,5 @@
+import Logo from "./Logo";
+
 export default {
-  logo: () => <h1>Logo</h1>,
+  logo: Logo,
 };

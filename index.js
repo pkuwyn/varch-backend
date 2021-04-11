@@ -60,7 +60,7 @@ const keystone = new Keystone({
   },
 
   //初始化测试数据
-  // onConnect: initialiseData,
+  onConnect: initialiseData,
 
   cookie: {
     secure: process.env.NODE_ENV === "production", // Default to true in production
