@@ -11,5 +11,5 @@ keystone
     await keystone.connect();
     const app = express();
 
-    app.use(middlewares).listen(80);
+    app.use(middlewares).listen(process.env.PORT);
   });

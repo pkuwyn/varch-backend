@@ -45,6 +45,40 @@ query getSpecificUsers {
   }
 }
 
+mutation createTestCourse{
+  createCourse(data:{
+    name:"testCourse",
+    summary:"test course summary",
+    category:C2,
+    
+  }){
+    name
+    summary
+    category
+  }
+}
+
+
+query getAllCourses {
+  allCourses {
+    name
+    summary
+    category
+    content
+    learningTime
+   isMinimal
+    coverImage{
+      publicUrl
+    }
+    father {
+      name
+    }
+    children {
+      name
+    }
+  }
+}
+
 
 
 #Var

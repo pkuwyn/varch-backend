@@ -4,6 +4,7 @@ const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
 //Keystone Apps
 const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
+const { StaticApp } = require("@keystonejs/app-static");
 
 //utils
 const { PasswordAuthStrategy } = require("@keystonejs/auth-password");
@@ -60,7 +61,7 @@ const keystone = new Keystone({
   },
 
   //初始化测试数据
-  onConnect: initialiseData,
+  // onConnect: initialiseData,
 
   cookie: {
     secure: process.env.NODE_ENV === "production", // Default to true in production
@@ -73,10 +74,18 @@ const keystone = new Keystone({
     maxTotalResults: 1000,
   },
 });
-
+console.log(process.env.PORT, process.env.HOST);
 //ListSchema
 const UserSchema = require("./lists/User.js");
 keystone.createList("User", UserSchema);
+const CourseSchema = require("./lists/Course.js");
+keystone.createList("Course", CourseSchema);
+const QuestionSchema = require("./lists/Question.js");
+keystone.createList("Question", QuestionSchema);
+const CustomFileSchema = require("./lists/CustomFile.js");
+keystone.createList("CustomFile", CustomFileSchema);
+const VtourSchema = require("./lists/Vtour.js");
+keystone.createList("Vtour", VtourSchema);
 
 //auth settings
 const authStrategy = keystone.createAuthStrategy({
@@ -95,6 +104,11 @@ module.exports = {
       enableDefaultRoute: true,
       authStrategy,
       isAccessAllowed: userIsAdmin,
+    }),
+    new StaticApp({
+      path: "/media",
+      src: "./media",
+      fallback: "index.html",
     }),
   ],
 };
