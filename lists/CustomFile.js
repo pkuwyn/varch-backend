@@ -11,6 +11,9 @@ const fileAdapter = new LocalFileAdapter({
 //plugins
 const { atTracking } = require("@keystonejs/list-plugins");
 
+//hooks
+const { beforeChange, afterDelete } = require("../utils/file-hooks");
+
 //Access Control
 const { ContentListAccess } = require("../access-control/list-access");
 
@@ -29,7 +32,9 @@ const fields = {
     adapter: fileAdapter,
     isRequired: true,
 
-    //权限控制
+    hooks: {
+      beforeChange: beforeChange("file", fileAdapter),
+    },
 
     //文档配置
     label: "文件",
@@ -89,6 +94,11 @@ module.exports = {
 
   //后台标签名称
   labelField: "name",
+
+  //文件清理设置
+  hooks: {
+    afterDelete: afterDelete(["file"], fileAdapter),
+  },
 
   //插件设置
   plugins: [atTracking({})],

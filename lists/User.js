@@ -8,12 +8,17 @@ const {
 
 //plugins
 const { atTracking } = require("@keystonejs/list-plugins");
+const logger = require("node-color-log");
 // const {loggingListConfig} = require("../plugins/logging-list-config");
 
 //Access Control
 const { UserListAccess } = require("../access-control/list-access");
+const {
+  cuForAdminOnly,
+  uForAdminOnly,
+} = require("../access-control/field-access");
 
-//utils
+//hooks
 const { emailValidator } = require("../utils/field-validators");
 
 //模型字段
@@ -24,6 +29,7 @@ const fields = {
     isUnique: true,
 
     //权限控制
+    access: uForAdminOnly,
 
     //文档配置
     label: "邮箱",
@@ -60,12 +66,27 @@ const fields = {
     defaultValue: false,
 
     //权限控制
+    access: cuForAdminOnly,
 
     //文档配置
     label: "是否为管理员",
     adminDoc:
       "默认用户均为非管理员，用户被设置为管理员后有后台权限，请谨慎设置",
     schemaDoc: "是否为管理员",
+  },
+
+  verified: {
+    type: Checkbox,
+    isRequired: true,
+    defaultValue: false,
+
+    //权限控制
+    access: cuForAdminOnly,
+
+    //文档配置
+    label: "邮箱是否验证",
+    adminDoc: "邮箱是否验证，仅管理员可修改，或用户本人通过邮箱验证请求",
+    schemaDoc: "邮箱是否验证",
   },
 
   coursesFinished: {
@@ -100,6 +121,17 @@ module.exports = {
 
   //列表级权限控制
   access: UserListAccess,
+  // access: {
+  //   create: ({ authentication: { item, listKey } }) => true,
+  //   read: ({ authentication: { item, listKey }, itemId, itemIds }) => {
+  //     console.log(item, itemId, itemIds);
+  //     return true;
+  //   },
+  //   update: ({ authentication: { item, listKey } }) => true,
+  //   delete: ({ authentication: { item, listKey } }) => true,
+
+  //   auth: true,
+  // },
 
   //模型url 标签显示 文档内容设置
   path: "users",

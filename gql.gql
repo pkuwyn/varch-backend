@@ -1,11 +1,43 @@
 # Write your query or mutation here
 fragment allUserField on User {
+  id
   name
   email
   isAdmin
   password_is_set
+  coursesFinished {
+    id
+  }
+  vtoursFinished {
+    id
+  }
 }
 
+fragment allCourseField on Course 
+{
+   id
+    name
+    summary
+    category
+    content
+    learningTime
+    isMinimal
+   coverImage {
+    publicUrl
+    filename
+    path
+    originalFilename
+    mimetype
+    encoding
+    
+  }
+    father {
+      name
+    }
+    children {
+      name
+    }
+}
 
 mutation createAdmin{
   createUser(data:{
@@ -28,11 +60,35 @@ query getAllUser($withLabel:Boolean!){
   }
 }
 
+mutation	login($email:String! $password:String!){
+  authenticateUserWithPassword(email:$email,password:$password){
+    token
+    item{
+      ...allUserField
+    }
+  }
+}
+
+mutation logout{
+  unauthenticateUser{
+    success
+  }
+}
 query getCurrentUser {
   authenticatedUser {
     ...allUserField
   }
 }
+
+mutation updateOtherUser($userId:ID!){
+  updateUser(id:$userId, data:{
+    password:"12345678"
+  }) {
+    ...allUserField
+  }
+}
+
+
 query getSpecificUser {
   User(where:{id:"606e8f6f53a9083afc6f54eb"}){
     ...allUserField
@@ -80,8 +136,32 @@ query getAllCourses {
 }
 
 
+mutation updateFinishCourse($courseId: ID!, $userId: ID!) {
+  updateUser(
+    id: $userId
+    data: { coursesFinished: { connect: [{ id: $courseId }] } }
+  ) {
+    ...allUserField
+  }
+}
+
+mutation updateFinishCourseUsingCreate( $userId: ID!) {
+  updateUser(
+    id: $userId
+    data: { coursesFinished: { create: [{   name:"testCourse2",
+    summary:"test course summary",
+    category:C2, }] } }
+  ) {
+    ...allUserField
+  }
+}
+
 
 #Var
 {
-  "withLabel": false
+  "withLabel": false,
+  "email":"me@wynwhy.com",
+  "password":"12345678",
+    "courseId": "60766ca0d932a12cc86f10f0",
+  "userId": "607649eb8b1cc24f981c15c2"
 }

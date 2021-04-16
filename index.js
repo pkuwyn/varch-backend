@@ -1,6 +1,7 @@
 const { Keystone } = require("@keystonejs/keystone");
 const { MongooseAdapter: Adapter } = require("@keystonejs/adapter-mongoose");
-
+// const dotenv = require("dotenv");
+// dotenv.config();
 //Keystone Apps
 const { GraphQLApp } = require("@keystonejs/app-graphql");
 const { AdminUIApp } = require("@keystonejs/app-admin-ui");
@@ -10,7 +11,7 @@ const { StaticApp } = require("@keystonejs/app-static");
 const { PasswordAuthStrategy } = require("@keystonejs/auth-password");
 
 //custom import
-const initialiseData = require("./initial-data");
+const initialiseData = require("./init-data");
 
 //config
 const adapterConfig = {
@@ -61,7 +62,7 @@ const keystone = new Keystone({
   },
 
   //初始化测试数据
-  // onConnect: initialiseData,
+  onConnect: initialiseData,
 
   cookie: {
     secure: process.env.NODE_ENV === "production", // Default to true in production
@@ -74,7 +75,7 @@ const keystone = new Keystone({
     maxTotalResults: 1000,
   },
 });
-console.log(process.env.PORT, process.env.HOST);
+
 //ListSchema
 const UserSchema = require("./lists/User.js");
 keystone.createList("User", UserSchema);
@@ -95,6 +96,10 @@ const authStrategy = keystone.createAuthStrategy({
   plugins: [logAuth],
 });
 
+//custom schema
+const customSchemaConfig = require("./custom-schema");
+keystone.extendGraphQLSchema(customSchemaConfig(keystone));
+
 module.exports = {
   keystone,
   apps: [
@@ -103,7 +108,8 @@ module.exports = {
       name: PROJECT_NAME,
       enableDefaultRoute: true,
       authStrategy,
-      isAccessAllowed: userIsAdmin,
+      //仅管理员可以登陆后台
+      // isAccessAllowed: userIsAdmin,
     }),
     new StaticApp({
       path: "/media",

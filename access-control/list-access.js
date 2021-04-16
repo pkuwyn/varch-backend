@@ -1,5 +1,8 @@
 const { createAddAccess, createOrAccess } = require("./access-compose");
-const { userIsAdmin, userIsItem } = require("./access-basic");
+const {
+  userIsAdmin,
+  userIsItemForList: userIsItem,
+} = require("./access-basic");
 
 //组合权限，由基础权限合成
 const userIsAdminOrIsItem = createOrAccess(userIsAdmin, userIsItem);
@@ -9,10 +12,10 @@ const userIsAdminOrIsItem = createOrAccess(userIsAdmin, userIsItem);
 
 //用户列表权限
 const UserListAccess = {
-  // read: userIsAdminOrIsItem,
-  // update: userIsAdminOrIsItem,
-  // create: userIsAdmin,
-  // delete: userIsAdmin,
+  read: userIsAdminOrIsItem,
+  update: userIsAdminOrIsItem,
+  create: true,
+  delete: userIsAdmin,
   auth: true,
 };
 

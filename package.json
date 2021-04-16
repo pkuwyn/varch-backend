@@ -15,7 +15,7 @@
     "build": "cross-env NODE_ENV=production keystone build",
     "start": "cross-env NODE_ENV=production keystone start",
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
-    "start:watch": "cross-env NODE_ENV=development PORT=80 HOST=localhost DISABLE_LOGGING=true nodemon server.js"
+    "start:watch": "cross-env NODE_ENV=development PORT=80 HOST=localhost DISABLE_LOGGING=true nodemon -r dotenv/config server.js"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^11.0.1",
@@ -33,12 +33,16 @@
     "connect-mongo": "^4.4.1",
     "connect-mongodb-session": "^2.4.1",
     "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
     "express-session": "^1.17.1",
     "express-sessions": "^1.0.6",
+    "mailgun-js": "^0.22.0",
     "node-color-log": "^5.2.0",
+    "random-number-csprng": "^1.0.2",
     "validator": "^13.5.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "request": "^2.88.2"
   }
 }
