@@ -4,6 +4,7 @@ const {
   Password,
   Relationship,
   Select,
+  Integer,
 } = require("@keystonejs/fields");
 
 //plugins
@@ -121,17 +122,6 @@ module.exports = {
 
   //列表级权限控制
   access: UserListAccess,
-  // access: {
-  //   create: ({ authentication: { item, listKey } }) => true,
-  //   read: ({ authentication: { item, listKey }, itemId, itemIds }) => {
-  //     console.log(item, itemId, itemIds);
-  //     return true;
-  //   },
-  //   update: ({ authentication: { item, listKey } }) => true,
-  //   delete: ({ authentication: { item, listKey } }) => true,
-
-  //   auth: true,
-  // },
 
   //模型url 标签显示 文档内容设置
   path: "users",

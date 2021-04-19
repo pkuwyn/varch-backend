@@ -157,6 +157,41 @@ mutation updateFinishCourseUsingCreate( $userId: ID!) {
 }
 
 
+
+# Verify
+mutation sendVerifyEmail {
+  sendVerifyCode(email: "me@wynwhy.com", type: VERIFY) {
+    success
+    message
+  }
+}
+
+mutation verifyEmail {
+  verifyEmail(email: "me@wynwhy.com", vCode: "603228") {
+    success
+    message
+  }
+}
+
+mutation sendResetEmail {
+  sendVerifyCode(email: "me@wynwhy.com", type: RESET) {
+    success
+    message
+  }
+}
+mutation resetPassword {
+  resetPassword(
+    email: "me@wynwhy.com"
+    vCode: "961063"
+    newPassword: "123456789"
+  ) {
+    success
+    message
+  }
+}
+
+
+
 #Var
 {
   "withLabel": false,

@@ -109,7 +109,7 @@ module.exports = {
       enableDefaultRoute: true,
       authStrategy,
       //仅管理员可以登陆后台
-      // isAccessAllowed: userIsAdmin,
+      isAccessAllowed: userIsAdmin,
     }),
     new StaticApp({
       path: "/media",
