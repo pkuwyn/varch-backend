@@ -20,7 +20,6 @@ function VCodeRestore() {
   };
   this.deleteCode = function (email) {
     this.store[email] = undefined;
-    // vCodeRestore.log();
   };
   this.log = function () {
     logger.color("blue").bgColor("yellow").log(JSON.stringify(this));
