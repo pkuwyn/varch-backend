@@ -34,24 +34,23 @@ const { userIsAdmin } = require("./access-control/access-basic");
 //   expire: 1000 * 60 * 60 * 24 * 30, // 30 days
 // });
 
-//use connect-mongodb-session as session store
-// const session = require("express-session");
-// const MongoDBStore = require("connect-mongodb-session")(session);
-// const store = new MongoDBStore({
-//   uri: "mongodb://localhost:27017/connect_mongodb_session_test",
-//   collection: "mySessions",
-//   expires: 1000 * 60 * 60 * 24 * 30, // 30 days in milliseconds
-// });
-
-//Best Choice
-//use connect-mongo as session store
-const MongoStore = require("connect-mongo");
-const store = MongoStore.create({
-  mongoUrl: "mongodb://localhost:27017/connect-mongo",
-  ttl: 30 * 24 * 60 * 60, // 30 days. Default
-  collectionName: "sessions",
-  stringify: false,
+// use connect-mongodb-session as session store
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const store = new MongoDBStore({
+  uri: "mongodb://localhost:27017/varch-sessions",
+  collection: "connect-mongodb-session",
+  expires: 1000 * 60 * 60 * 24 * 30, // 30 days in milliseconds
 });
+
+//use connect-mongo as session store
+// const MongoStore = require("connect-mongo");
+// const store = MongoStore.create({
+//   mongoUrl: "mongodb://localhost:27017/connect-mongo",
+//   ttl: 30 * 24 * 60 * 60, // 30 days. Default
+//   collectionName: "sessions",
+//   stringify: false,
+// });
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
