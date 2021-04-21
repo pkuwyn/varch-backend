@@ -171,6 +171,16 @@ const fields = {
     adminDoc: "预期学习时间（分钟）默认为10分钟",
     schemaDoc: "学习时间",
   },
+  order: {
+    type: Integer,
+    isRequired: true,
+    defaultValue: 1,
+
+    //文档配置
+    label: "推荐学习顺序",
+    adminDoc: "同属一个父课程下的子课程的排序，序号越小越靠前",
+    schemaDoc: "同属一个父课程下的子课程的排序，序号越小越靠前",
+  },
 };
 
 module.exports = {
