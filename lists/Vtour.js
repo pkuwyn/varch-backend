@@ -129,8 +129,8 @@ const fields = {
 
     //文档配置
     label: "排序",
-    adminDoc: "虚拟实习排序，越大越靠前",
-    schemaDoc: "虚拟实习排序",
+    adminDoc: "虚拟实习排序，越小越靠前",
+    schemaDoc: "虚拟实习排序，越小越靠前",
   },
 };
 
@@ -138,7 +138,7 @@ module.exports = {
   fields,
 
   //列表级权限控制
-  access: ContentListAccess,
+  // access: ContentListAccess,
 
   //模型url 标签显示 文档内容设置
   path: "vtours",

@@ -187,7 +187,7 @@ module.exports = {
   fields,
 
   //列表级权限控制
-  access: ContentListAccess,
+  // access: ContentListAccess,
 
   //模型url 标签显示 文档内容设置
   path: "courses",
