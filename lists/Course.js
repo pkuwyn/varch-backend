@@ -204,7 +204,7 @@ module.exports = {
   //后台列表设置
   adminConfig: {
     defaultColumns: "coverImage,category,createdAt",
-    defaultPageSize: 20,
+    defaultPageSize: 30,
     defaultSort: "createdAt",
     maximumPageSize: 50,
   },
