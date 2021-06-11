@@ -115,6 +115,19 @@ const fields = {
     adminDoc: "已完成实习列表，追踪用户虚拟实习情况",
     schemaDoc: "已完成实习",
   },
+
+  unityFinished: {
+    type: Checkbox,
+    isRequired: true,
+    defaultValue: false,
+
+    //权限控制
+
+    //文档配置
+    label: "是否完成虚拟发掘",
+    adminDoc: "是否完成虚拟发掘",
+    schemaDoc: "是否完成虚拟发掘",
+  },
 };
 
 module.exports = {
